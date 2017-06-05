@@ -22,8 +22,8 @@ namespace ToDoList
     [Fact]
     public void Test_Equal_ReturnsTrueIfDescriptionsAreTheSame()
     {
-      Task firstTask = new Task("Mow the lawn");
-      Task secondTask = new Task("Mow the lawn");
+      Task firstTask = new Task("Mow the lawn", 1);
+      Task secondTask = new Task("Mow the lawn", 1);
 
       Assert.Equal(firstTask, secondTask);
     }
@@ -31,7 +31,7 @@ namespace ToDoList
     [Fact]
     public void Test_Save_SavesToDatabase()
     {
-      Task testTask = new Task("Mow the lawn");
+      Task testTask = new Task("Mow the lawn", 1);
 
       testTask.Save();
       List<Task> result = Task.GetAll();
@@ -42,7 +42,7 @@ namespace ToDoList
     [Fact]
     public void Test_Save_AssignsIdToObject()
     {
-      Task testTask = new Task("Mow the lawn");
+      Task testTask = new Task("Mow the lawn", 1);
 
       testTask.Save();
       Task savedTask = Task.GetAll()[0];
@@ -56,7 +56,7 @@ namespace ToDoList
     [Fact]
     public void Test_Find_FindsTaskInDatabase()
     {
-      Task testTask = new Task("Wash the dishes");
+      Task testTask = new Task("Wash the dishes", 1);
       testTask.Save();
 
       Task foundTask = Task.Find(testTask.GetId());
