@@ -56,7 +56,7 @@ namespace ToDoList
     [Fact]
     public void Test_Find_FindsTaskInDatabase()
     {
-      Task testTask = new Task("Wash the dishes", 1);
+      Task testTask = new Task("Do the dishes", 1);
       testTask.Save();
 
       Task foundTask = Task.Find(testTask.GetId());

@@ -13,9 +13,9 @@ namespace ToDoList
 
     public Task(string Description,int CategoryId, int Id = 0)
     {
-      _id = Id;
       _description = Description;
       _categoryId = CategoryId;
+      _id = Id;
     }
 
     public override bool Equals(System.Object otherTask)
@@ -29,7 +29,7 @@ namespace ToDoList
         Task newTask = (Task) otherTask;
         bool idEquality = (this.GetId() == newTask.GetId());
         bool descriptionEquality = (this.GetDescription() == newTask.GetDescription());
-        bool categoryEquality = this.GetCategoryId() == newTask.GetCategoryId();
+        bool categoryEquality = (this.GetCategoryId() == newTask.GetCategoryId());
         return (descriptionEquality && idEquality && categoryEquality);
       }
     }
@@ -56,7 +56,7 @@ namespace ToDoList
     }
     public static List<Task> GetAll()
     {
-      List<Task> allTasks = new List<Task>{};
+      List<Task> AllTasks = new List<Task>{};
 
       SqlConnection conn = DB.Connection();
       conn.Open();
@@ -70,9 +70,8 @@ namespace ToDoList
         string taskDescription = rdr.GetString(1);
         int taskCategoryId = rdr.GetInt32(2);
         Task newTask = new Task(taskDescription, taskCategoryId, taskId);
-        allTasks.Add(newTask);
+        AllTasks.Add(newTask);
       }
-
       if (rdr != null)
       {
         rdr.Close();
@@ -81,8 +80,7 @@ namespace ToDoList
       {
         conn.Close();
       }
-
-      return allTasks;
+      return AllTasks;
     }
 
     public void Save()
@@ -90,7 +88,7 @@ namespace ToDoList
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO tasks (description, category_id) OUTPUT INSERTED.id VALUES(@TaskDescription, @TaskCategoryId);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO tasks (description, category_id) OUTPUT INSERTED.id VALUES (@TaskDescription, @TaskCategoryId);", conn);
 
       SqlParameter descriptionParameter = new SqlParameter();
       descriptionParameter.ParameterName = "@TaskDescription";

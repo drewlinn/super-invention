@@ -58,6 +58,27 @@ namespace ToDoList
       Assert.Equal(testCategory, foundCategory);
     }
 
+    [Fact]
+    public void Test_GetTasks_RetrievesAllTasksWithCategory()
+    {
+      Category testCategory = new Category("Household chores");
+      testCategory.Save();
+
+      Task firstTask = new Task("task1", testCategory.GetId());
+      firstTask.Save();
+      Task secondTask = new Task("task2", testCategory.GetId());
+      secondTask.Save();
+
+      List<Task> testTaskList = new List<Task> {firstTask, secondTask};
+      List<Task> resultTaskList = testCategory.GetTasks();
+
+      foreach(Task task in resultTaskList)
+      {
+        Console.WriteLine("Result Task: {0}, Id: {1}, CatId: {2}", task.GetDescription(), task.GetId(), task.GetCategoryId());
+      }
+      Assert.Equal(testTaskList, resultTaskList);
+    }
+
     public void Dispose()
     {
       Task.DeleteAll();
